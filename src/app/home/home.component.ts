@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { Category } from './category.model';
+import {CategoryService} from './category.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public categories: Category[];
+
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.syncrhonize();
   }
+
+  syncrhonize(){
+    this.categoryService.getCategories().subscribe(
+      data=>{
+        console.log(data);
+        this.categories=data
+      }
+    )
+  }
+  
 
 }
