@@ -7,13 +7,18 @@ import { Category } from './category.model';
     providedIn: 'root'
 })
 export class CategoryService{
-
+    private url="https://api-products-rafael.herokuapp.com/api/v0/categories";
     constructor(private http: HttpClient) {
     }
     getCategories(): Observable < Category[] > {
-        return this.http.get<Category[]>('https://api-products-rafael.herokuapp.com/api/v0/categories');
+        return this.http.get<Category[]>(this.url);
     }
     getCategory(id:String):Observable<Category>{
-        return this.http.get<Category>('https://api-products-rafael.herokuapp.com/api/v0/categories'+'\\'+id); 
+        return this.http.get<Category>(this.url+'\\'+id); 
     }
+
+    postCategory(category:Category):Observable<any>{
+        return this.http.post(this.url,category);
+    }
+
 }

@@ -11,9 +11,13 @@ export class QsComponent implements OnInit {
   
   static URL='quienes-somos/:id';
   public category:Category;
+  public categoryCreate:Category;
+  
   constructor(private route: ActivatedRoute,private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.category={id:'',category:''};
+    this.categoryCreate={id:"",category:''};
     this.route.url.subscribe(data=>{
       console.log(data[1].path);
       this.syncrhonize(data[1].path);
@@ -26,6 +30,13 @@ export class QsComponent implements OnInit {
       data=>{
         this.category=data
         console.log(data);
+      }
+    )
+  }
+  create(){
+    this.categoryService.postCategory(this.categoryCreate).subscribe(
+      data=>{
+        alert("categoria generada");
       }
     )
   }
